@@ -4,7 +4,7 @@
   "description": "Gulp build scripts for front end APC projects",
   "main": "index.js",
   "scripts": {
-    "test": "yarn lint && nyc mocha",
+    "test": "yarn lint && nyc mocha && nyc report --reporter=text-lcov | coveralls",
     "lint": "eslint test/* gulp-tasks/*.js"
   },
   "repository": {
@@ -51,6 +51,7 @@
   },
   "devDependencies": {
     "chai": "4.1.2",
+    "coveralls": "3.0.0",
     "mocha": "4.0.1",
     "sinon": "4.1.2",
     "sinon-chai": "2.14.0"
