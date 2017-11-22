@@ -67,3 +67,32 @@ describe('Lint Pug', () => {
       })
   })
 })
+
+describe('Lint JS', () => {
+  beforeEach(() => {
+    gulp.reset()
+    logMock = sinon.stub(require('gulp-util'), 'log')
+  })
+
+  afterEach(() => {
+    logMock.restore()
+  })
+
+  it('Run lint-js on valid js files', async () => {
+    const lintPug = require('../gulp-tasks/lint-js')(gulp, 'test/input/lint-valid/*.js')
+    await lintPug()
+    expect(logMock).to.be.calledWith('No JS Lint Errors')
+  })
+
+  it('Run lint-js on invalid js files', async () => {
+    const lintPug = require('../gulp-tasks/lint-js')(gulp, 'test/input/lint-invalid/*.js')
+    await lintPug()
+      .then(() => {
+        expect(0).to.equal(1)
+      })
+      .catch((e) => {
+        expect(e.message).to.equal('JS Lint Errors')
+        expect(logMock.firstCall.args[0]).to.contain('✖ 2 problems (2 errors, 0 warnings)')
+      })
+  })
+})
