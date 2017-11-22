@@ -9,6 +9,8 @@ const gulpif = require('gulp-if')
 const path = require('path')
 
 module.exports = (gulp, entry, dest, showFileSizes, browserifyIgnore) => {
+  require('./is-gulp')(gulp)
+
   return () => {
     if (!Array.isArray(entry)) {
       entry = [entry]
@@ -26,10 +28,8 @@ module.exports = (gulp, entry, dest, showFileSizes, browserifyIgnore) => {
         .pipe(source(path.basename(e)))
         .pipe(buffer())
         .pipe(sourcemaps.init())
-          .pipe(babel({presets: ['env']}))
-          .pipe(uglify().on('error', uglify => {
-            console.error(uglify.message)
-          }))
+        .pipe(babel({presets: ['env']}))
+        .pipe(uglify())
         .pipe(sourcemaps.write('./'))
         .pipe(gulpif(showFileSizes, size({showFiles: true, showTotal: false, gzip: true})))
         .pipe(gulp.dest(dest))

@@ -4,7 +4,8 @@
   "description": "Gulp build scripts for front end APC projects",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "yarn lint && nyc mocha",
+    "lint": "eslint test/* gulp-tasks/*.js"
   },
   "repository": {
     "type": "git",
@@ -26,7 +27,7 @@
     "yarn": "^1.0.0"
   },
   "dependencies": {
-    "apc-style": "0.4.1",
+    "apc-style": "0.4.3",
     "babel-core": "6.26.0",
     "babel-env": "2.4.1",
     "browserify": "14.5.0",
@@ -44,7 +45,47 @@
     "gulp-size": "2.1.0",
     "gulp-sourcemaps": "2.6.1",
     "gulp-uglify": "3.0.0",
+    "nyc": "^11.3.0",
     "vinyl-buffer": "1.0.0",
     "vinyl-source-stream": "1.1.0"
+  },
+  "devDependencies": {
+    "chai": "4.1.2",
+    "mocha": "4.0.1",
+    "sinon": "4.1.2",
+    "sinon-chai": "2.14.0"
+  },
+  "nyc": {
+    "include": [
+      "gulp-tasks/**/*.js",
+      "index.js"
+    ],
+    "all": true,
+    "watermarks": {
+      "lines": [
+        90,
+        99
+      ],
+      "functions": [
+        90,
+        99
+      ],
+      "branches": [
+        90,
+        99
+      ],
+      "statements": [
+        90,
+        99
+      ]
+    },
+    "reporter": [
+      "clover",
+      "text",
+      "text-summary",
+      "html",
+      "cobertura"
+    ],
+    "cache": true
   }
 }

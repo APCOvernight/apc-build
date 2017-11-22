@@ -7,6 +7,8 @@ const eslint = require('gulp-eslint')
  * @return {Function}          Gulp task
  */
 module.exports = (gulp, path) => {
+  require('./is-gulp')(gulp)
+
   return () => {
     return gulp.src(path)
       .pipe(eslint('apc'))

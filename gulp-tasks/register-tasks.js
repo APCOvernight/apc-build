@@ -1,10 +1,35 @@
+/**
+ * [exports description]
+ * @param  {Object}  gulp                         Gulp instance
+ * @param  {Object}  config                       Config Object
+ * @param  {String}  config.scssSrc         [description]
+ * @param  {Array|String}  config.jsSrc           [description]
+ * @param  {Array|String}  config.jsEntry         [description]
+ * @param  {Array|String}  config.pugSrc          [description]
+ * @param  {Array}   [config.scssIncludePaths=[]] [description]
+ * @param  {String}  config.jsDest                [description]
+ * @param  {String}  config.cssDest               [description]
+ * @param  {Array|String}  config.nodeSrc         [description]
+ * @param  {Array|String}  config.imgSrc          [description]
+ * @param  {String}  config.imgDest               [description]
+ * @param  {Boolean} [config.showFileSizes=true]  [description]
+ * @param  {Array}  config.browserifyIgnore       [description]
+ * @return {Function}                             Register Watchers function
+ */
+module.exports = (gulp, config) => {
+  require('./is-gulp')(gulp)
 
-module.exports = (gulp, { scssSrc, jsSrc, jsEntry, pugSrc, scssIncludePaths = [], jsDest, cssDest, nodeSrc, imgSrc, imgDest, showFileSizes = true, browserifyIgnore }) => {
+  if (!config || typeof config !== 'object') {
+    throw new Error('Config object not passed')
+  }
+
+  const { scssSrc, jsSrc, jsEntry, pugSrc, scssIncludePaths = [], jsDest, cssDest, nodeSrc, imgSrc, imgDest, showFileSizes = true, browserifyIgnore } = config
+
   const watchers = []
 
   if (scssSrc) {
-    gulp.task('sass-lint', require('./sass-lint')(gulp, scssSrc))
-    watchers.push({source: scssSrc, tasks: ['sass-lint']})
+    gulp.task('lint-sass', require('./lint-sass')(gulp, scssSrc))
+    watchers.push({source: scssSrc, tasks: ['lint-sass']})
   }
 
   if (scssSrc && cssDest) {
@@ -13,13 +38,13 @@ module.exports = (gulp, { scssSrc, jsSrc, jsEntry, pugSrc, scssIncludePaths = []
   }
 
   if (pugSrc) {
-    gulp.task('pug-lint', require('./pug-lint')(gulp, pugSrc))
-    watchers.push({source: pugSrc, tasks: ['pug-lint']})
+    gulp.task('lint-pug', require('./lint-pug')(gulp, pugSrc))
+    watchers.push({source: pugSrc, tasks: ['lint-pug']})
   }
 
   if (jsSrc) {
-    gulp.task('js-lint', require('./js-lint')(gulp, jsSrc))
-    watchers.push({source: jsSrc, tasks: ['js-lint']})
+    gulp.task('lint-js', require('./lint-js')(gulp, jsSrc))
+    watchers.push({source: jsSrc, tasks: ['lint-js']})
   }
 
   if (jsEntry && jsDest) {
@@ -28,8 +53,8 @@ module.exports = (gulp, { scssSrc, jsSrc, jsEntry, pugSrc, scssIncludePaths = []
   }
 
   if (nodeSrc) {
-    gulp.task('node-lint', require('./js-lint')(gulp, nodeSrc))
-    watchers.push({source: nodeSrc, tasks: ['node-lint']})
+    gulp.task('lint-node', require('./lint-js')(gulp, nodeSrc))
+    watchers.push({source: nodeSrc, tasks: ['lint-node']})
   }
 
   if (imgSrc && imgDest) {
@@ -38,6 +63,8 @@ module.exports = (gulp, { scssSrc, jsSrc, jsEntry, pugSrc, scssIncludePaths = []
   }
 
   return gulp => {
+    require('./is-gulp')(gulp)
+
     watchers.forEach(watcher => {
       gulp.watch(watcher.source, watcher.tasks)
     })

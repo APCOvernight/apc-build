@@ -8,7 +8,7 @@ const gulpif = require('gulp-if')
 const size = require('gulp-size')
 
 /**
- * Execute sass-lint command and throw if there are errors (unless in watch mode)
+ * Execute lint-sass command and throw if there are errors (unless in watch mode)
  * @param  {Object}       gulp Instance of gulp
  * @param  {Array|String} path Input source(s)
  * @param  {String}       dest Output Destination
@@ -17,6 +17,8 @@ const size = require('gulp-size')
  * @return {Function}          Gulp task
  */
 module.exports = (gulp, path, dest, scssIncludePaths, showFileSizes) => {
+  require('./is-gulp')(gulp)
+
   return () => {
     return gulp.src(path)
       .pipe(sourcemaps.init())
@@ -24,8 +26,7 @@ module.exports = (gulp, path, dest, scssIncludePaths, showFileSizes) => {
         sass({
           includePaths: scssIncludePaths,
           outputStyle: 'compressed'
-        })
-        .on('error', sassError(process.argv.length > 2))
+        }).on('error', sassError(process.argv.length > 2))
       )
       .pipe(
         autoprefixer({

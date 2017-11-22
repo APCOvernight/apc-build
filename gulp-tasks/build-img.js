@@ -8,9 +8,11 @@ const imagemin = require('gulp-imagemin')
  * @return {Function}          Gulp task
  */
 module.exports = (gulp, path, dest) => {
+  require('./is-gulp')(gulp)
+
   return () => {
     return gulp.src(path)
-     .pipe(imagemin())
-     .pipe(gulp.dest(dest))
+      .pipe(imagemin())
+      .pipe(gulp.dest(dest))
   }
 }
