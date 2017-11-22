@@ -2,3 +2,5 @@ node_modules
 output
 src
 .babelrc
+.nyc_output
+coverage
