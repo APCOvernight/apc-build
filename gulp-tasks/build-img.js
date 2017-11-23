@@ -11,8 +11,11 @@ module.exports = (gulp, path, dest) => {
   require('./is-gulp')(gulp)
 
   return () => {
-    return gulp.src(path)
-      .pipe(imagemin())
-      .pipe(gulp.dest(dest))
+    return new Promise((resolve, reject) => {
+      gulp.src(path)
+        .pipe(imagemin())
+        .pipe(gulp.dest(dest))
+        .on('end', () => resolve('Images built'))
+    })
   }
 }
