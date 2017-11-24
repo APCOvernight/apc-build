@@ -6,6 +6,8 @@ chai.use(require('sinon-chai'))
 const gulp = require('gulp')
 const fs = require('fs-extra')
 
+const streamAsPromise = require('./stream-as-promise')
+
 let logMock
 
 describe('Build Sass', () => {
@@ -22,8 +24,9 @@ describe('Build Sass', () => {
   it('Should compile basic sass files', async () => {
     expect(await fs.pathExists('test/output/css')).to.equal(false)
     const buildSass = require('../gulp-tasks/build-sass')(gulp, 'test/input/build-valid/test.scss', 'test/output/css')
-    const res = await buildSass()
-    expect(res).to.equal('Sass Built!')
+
+    await streamAsPromise(buildSass())
+
     expect(await fs.pathExists('test/output/css/test.css')).to.equal(true)
     expect(await fs.pathExists('test/output/css/test.css.map')).to.equal(true)
 
@@ -36,7 +39,7 @@ describe('Build Sass', () => {
     const buildSass = require('../gulp-tasks/build-sass')(gulp, 'test/input/build-invalid/test.scss', 'test/output/css')
 
     try {
-      await buildSass()
+      await streamAsPromise(buildSass())
       expect(0).to.equal(1)
     } catch (e) {
       expect(e.message).to.equal('Sass Build Errors')
@@ -52,7 +55,7 @@ describe('Build Sass', () => {
     const buildSass = require('../gulp-tasks/build-sass')(gulp, 'test/input/build-valid/test-foundation.scss', 'test/output/css', '')
 
     try {
-      await buildSass()
+      await streamAsPromise(buildSass())
       expect(0).to.equal(1)
     } catch (e) {
       expect(e.message).to.equal('Sass Build Errors')
@@ -67,8 +70,8 @@ describe('Build Sass', () => {
   it('Should include sass paths', async () => {
     expect(await fs.pathExists('test/output/css')).to.equal(false)
     const buildSass = require('../gulp-tasks/build-sass')(gulp, 'test/input/build-valid/test-foundation.scss', 'test/output/css', ['node_modules/foundation-sites/scss'])
-    const res = await buildSass()
-    expect(res).to.equal('Sass Built!')
+
+    await streamAsPromise(buildSass())
 
     expect(await fs.pathExists('test/output/css/test-foundation.css')).to.equal(true)
     expect(await fs.pathExists('test/output/css/test-foundation.css.map')).to.equal(true)
@@ -80,14 +83,14 @@ describe('Build Sass', () => {
   it('Should show file size', async () => {
     expect(await fs.pathExists('test/output/css')).to.equal(false)
     const buildSass = require('../gulp-tasks/build-sass')(gulp, 'test/input/build-valid/test.scss', 'test/output/css', [], true)
-    await buildSass()
+    await streamAsPromise(buildSass())
     expect(logMock).to.be.calledWith('\u001b[34mtest.css\u001b[39m \u001b[35m76 B\u001b[39m\u001b[90m (gzipped)\u001b[39m')
   })
 
   it('Should not show file size', async () => {
     expect(await fs.pathExists('test/output/css')).to.equal(false)
     const buildSass = require('../gulp-tasks/build-sass')(gulp, 'test/input/build-valid/test.scss', 'test/output/css', [], false)
-    await buildSass()
+    await streamAsPromise(buildSass())
     expect(logMock).to.not.be.calledWith('\u001b[34mtest.css\u001b[39m \u001b[35m76 B\u001b[39m\u001b[90m (gzipped)\u001b[39m')
   })
 })
@@ -105,9 +108,10 @@ describe('Build Js', () => {
 
   it('Should compile basic js files', async () => {
     expect(await fs.pathExists('test/output/js')).to.equal(false)
-    const buildJs = require('../gulp-tasks/build-js')(gulp, 'test/input/build-valid/test.js', 'test/output/js')
-    const res = await buildJs()
-    expect(res[0]).to.equal('test/input/build-valid/test.js built')
+    const buildJs = require('../gulp-tasks/build-js')(gulp, 'test/input/build-valid/test.js', 'test/output/js', 'test.js')
+
+    await streamAsPromise(buildJs())
+
     expect(await fs.pathExists('test/output/js/test.js')).to.equal(true)
     expect(await fs.pathExists('test/output/js/test.js.map')).to.equal(true)
 
@@ -117,15 +121,19 @@ describe('Build Js', () => {
 
   it('Should show file size', async () => {
     expect(await fs.pathExists('test/output/js')).to.equal(false)
-    const buildJs = require('../gulp-tasks/build-js')(gulp, 'test/input/build-valid/test.js', 'test/output/js', true)
-    await buildJs()
+    const buildJs = require('../gulp-tasks/build-js')(gulp, 'test/input/build-valid/test.js', 'test/output/js', 'test.js', true)
+
+    await streamAsPromise(buildJs())
+
     expect(logMock).to.be.calledWith('\u001b[34mtest.js\u001b[39m \u001b[35m349 B\u001b[39m\u001b[90m (gzipped)\u001b[39m')
   })
 
   it('Should not show file size', async () => {
     expect(await fs.pathExists('test/output/js')).to.equal(false)
-    const buildJs = require('../gulp-tasks/build-js')(gulp, 'test/input/build-valid/test.js', 'test/output/js', false)
-    await buildJs()
+    const buildJs = require('../gulp-tasks/build-js')(gulp, 'test/input/build-valid/test.js', 'test/output/js', 'test.js', false)
+
+    await streamAsPromise(buildJs())
+
     expect(logMock).to.not.be.calledWith('\u001b[34mtest.js\u001b[39m \u001b[35m349 B\u001b[39m\u001b[90m (gzipped)\u001b[39m')
   })
 
@@ -134,7 +142,7 @@ describe('Build Js', () => {
     const buildJs = require('../gulp-tasks/build-js')(gulp, 'test/input/build-invalid/test.js', 'test/output/js')
 
     try {
-      await buildJs()
+      await streamAsPromise(buildJs())
       expect(0).to.equal(1)
     } catch (e) {
       expect(e.message).to.equal('JS Build Errors')
@@ -145,23 +153,18 @@ describe('Build Js', () => {
     expect(await fs.pathExists('test/output/js/test.js.map')).to.equal(false)
   })
 
-  it('Should compile multiple js files', async () => {
+  it('Should compile multiple entries into one file', async () => {
     expect(await fs.pathExists('test/output/js')).to.equal(false)
-    const buildJs = require('../gulp-tasks/build-js')(gulp, ['test/input/build-valid/test.js', 'test/input/build-valid/test-2.js'], 'test/output/js', true, ['moment'])
-    const res = await buildJs()
-    expect(res[0]).to.equal('test/input/build-valid/test.js built')
-    expect(await fs.pathExists('test/output/js/test.js')).to.equal(true)
-    expect(await fs.pathExists('test/output/js/test.js.map')).to.equal(true)
+    const buildJs = require('../gulp-tasks/build-js')(gulp, ['test/input/build-valid/test.js', 'test/input/build-valid/test-2.js'], 'test/output/js', undefined, true, ['moment'])
 
-    const js = await fs.readFile('test/output/js/test.js', 'utf8')
-    expect(js).to.contain('function(r,e,n){console.log(25)')
+    await streamAsPromise(buildJs())
 
-    expect(res[1]).to.equal('test/input/build-valid/test-2.js built')
-    expect(await fs.pathExists('test/output/js/test-2.js')).to.equal(true)
-    expect(await fs.pathExists('test/output/js/test-2.js.map')).to.equal(true)
+    expect(await fs.pathExists('test/output/js/bundle.js')).to.equal(true)
+    expect(await fs.pathExists('test/output/js/bundle.js.map')).to.equal(true)
 
-    const js2 = await fs.readFile('test/output/js/test-2.js', 'utf8')
-    expect(js2).to.contain('function(r,e,n){console.log(16)')
+    const js = await fs.readFile('test/output/js/bundle.js', 'utf8')
+    expect(js).to.contain('function(r,e,n){console.log(25)}')
+    expect(js).to.contain('function(r,e,n){console.log(16)}')
   })
 })
 
@@ -179,9 +182,9 @@ describe('Build Images', () => {
   it('Should move and minify images', async () => {
     expect(await fs.pathExists('test/output/img')).to.equal(false)
     const buildImg = require('../gulp-tasks/build-img')(gulp, 'test/input/build-valid/*', 'test/output/img')
-    const res = await buildImg()
 
-    expect(res).to.equal('Images built')
+    await streamAsPromise(buildImg())
+
     expect(await fs.pathExists('test/output/img/test.jpg')).to.equal(true)
     expect(logMock).to.be.calledWith('gulp-imagemin:')
   })

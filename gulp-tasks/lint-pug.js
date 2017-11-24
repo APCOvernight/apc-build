@@ -11,24 +11,21 @@ module.exports = (gulp, path) => {
   require('./is-gulp')(gulp)
 
   return () => {
-    return new Promise((resolve, reject) => {
-      gulp.src(path)
-        .pipe(pugLint())
-        .pipe(pugLint.reporter(errors => {
-          if (errors.length) {
-            errors.map(error => {
-              const lines = error.message.split(/\n/g)
-              lines.map(line => gutil.log(line))
-            })
-            reject(new gutil.PluginError({
-              plugin: 'lint-pug',
-              message: 'Pug Lint Errors'
-            }))
-          } else {
-            gutil.log('No Pug Lint Errors')
-            resolve('No Pug Lint Errors')
-          }
-        }))
-    })
+    return gulp.src(path)
+      .pipe(pugLint())
+      .pipe(pugLint.reporter(errors => {
+        if (errors.length) {
+          errors.map(error => {
+            const lines = error.message.split(/\n/g)
+            lines.map(line => gutil.log(line))
+          })
+          throw new gutil.PluginError({
+            plugin: 'lint-pug',
+            message: 'Pug Lint Errors'
+          })
+        } else {
+          gutil.log('No Pug Lint Errors')
+        }
+      }))
   }
 }

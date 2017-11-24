@@ -5,6 +5,8 @@ const expect = chai.expect
 chai.use(require('sinon-chai'))
 const gulp = require('gulp')
 
+const streamAsPromise = require('./stream-as-promise')
+
 let logMock
 
 describe('Lint Sass', () => {
@@ -51,13 +53,13 @@ describe('Lint Pug', () => {
 
   it('Run lint-pug on valid pug files', async () => {
     const lintPug = require('../gulp-tasks/lint-pug')(gulp, 'test/input/lint-valid/*.pug')
-    await lintPug()
+    await streamAsPromise(lintPug())
     expect(logMock).to.be.calledWith('No Pug Lint Errors')
   })
 
   it('Run lint-pug on invalid pug files', async () => {
     const lintPug = require('../gulp-tasks/lint-pug')(gulp, 'test/input/lint-invalid/*.pug')
-    await lintPug()
+    await streamAsPromise(lintPug())
       .then(() => {
         expect(0).to.equal(1)
       })
@@ -80,13 +82,13 @@ describe('Lint JS', () => {
 
   it('Run lint-js on valid js files', async () => {
     const lintPug = require('../gulp-tasks/lint-js')(gulp, 'test/input/lint-valid/*.js')
-    await lintPug()
+    await streamAsPromise(lintPug())
     expect(logMock).to.be.calledWith('No JS Lint Errors')
   })
 
   it('Run lint-js on invalid js files', async () => {
     const lintPug = require('../gulp-tasks/lint-js')(gulp, 'test/input/lint-invalid/*.js')
-    await lintPug()
+    await streamAsPromise(lintPug())
       .then(() => {
         expect(0).to.equal(1)
       })

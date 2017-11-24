@@ -11,21 +11,18 @@ module.exports = (gulp, path) => {
   require('./is-gulp')(gulp)
 
   return () => {
-    return new Promise((resolve, reject) => {
-      gulp.src(path)
-        .pipe(eslint('apc'))
-        .pipe(eslint.format('stylish'))
-        .pipe(eslint.failAfterError())
-        .on('error', () => {
-          reject(new gutil.PluginError({
+    return gulp.src(path)
+      .pipe(eslint('apc'))
+      .pipe(eslint.format('stylish'))
+      .pipe(eslint.results(results => {
+        if (!results.errorCount && !results.warningCount) {
+          gutil.log('No JS Lint Errors')
+        } else {
+          throw new gutil.PluginError({
             plugin: 'lint-js',
             message: 'JS Lint Errors'
-          }))
-        })
-        .pipe(eslint.results(() => {
-          gutil.log('No JS Lint Errors')
-          resolve('No JS Lint Errors')
-        }))
-    })
+          })
+        }
+      }))
   }
 }

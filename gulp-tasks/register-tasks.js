@@ -2,12 +2,13 @@
  * [exports description]
  * @param  {Object}  gulp                         Gulp instance
  * @param  {Object}  config                       Config Object
- * @param  {String}  config.scssSrc         [description]
+ * @param  {String}  config.scssSrc               [description]
  * @param  {Array|String}  config.jsSrc           [description]
  * @param  {Array|String}  config.jsEntry         [description]
  * @param  {Array|String}  config.pugSrc          [description]
  * @param  {Array}   [config.scssIncludePaths=[]] [description]
  * @param  {String}  config.jsDest                [description]
+ * @param  {String}  config.jsDestFilename        [description]
  * @param  {String}  config.cssDest               [description]
  * @param  {Array|String}  config.nodeSrc         [description]
  * @param  {Array|String}  config.imgSrc          [description]
@@ -23,7 +24,7 @@ module.exports = (gulp, config) => {
     throw new Error('Config object not passed')
   }
 
-  const { scssSrc, jsSrc, jsEntry, pugSrc, scssIncludePaths = [], jsDest, cssDest, nodeSrc, imgSrc, imgDest, showFileSizes = true, browserifyIgnore } = config
+  const { scssSrc, jsSrc, jsEntry, pugSrc, scssIncludePaths = [], jsDest, jsDestFilename, cssDest, nodeSrc, imgSrc, imgDest, showFileSizes = true, browserifyIgnore } = config
 
   const watchers = []
 
@@ -48,7 +49,7 @@ module.exports = (gulp, config) => {
   }
 
   if (jsEntry && jsDest) {
-    gulp.task('build-js', require('./build-js')(gulp, jsEntry, jsDest, showFileSizes, browserifyIgnore))
+    gulp.task('build-js', require('./build-js')(gulp, jsEntry, jsDest, jsDestFilename, showFileSizes, browserifyIgnore))
     watchers.push({source: jsSrc, tasks: ['build-js']})
   }
 
