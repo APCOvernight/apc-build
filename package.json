@@ -1,12 +1,11 @@
 {
   "name": "apc-build",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Gulp build scripts for front end APC projects",
   "main": "index.js",
   "scripts": {
     "test": "yarn lint && nyc mocha && nyc report --reporter=text-lcov | coveralls",
-    "lint": "eslint test/*.spec.js gulp-tasks/*.js",
-    "docs": "jsdoc -c ./jsdoc.js"
+    "lint": "eslint test/*.spec.js gulp-tasks/*.js"
   },
   "repository": {
     "type": "git",
