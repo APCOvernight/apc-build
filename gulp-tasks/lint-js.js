@@ -2,10 +2,19 @@ const eslint = require('gulp-eslint')
 const gutil = require('gulp-util')
 
 /**
- * Execute eslint and throw if there are errors (unless in watch mode)
- * @param  {Object}       gulp Instance of gulp
- * @param  {Array|String} path Path(s) of pug files to lint
+ * Lint js files using eslint
+ *
+ * @function lint-js
+ *
+ * @param  {Object}       gulp Gulp instance
+ * @param  {Array|String} path Path[s] of Js files to lint
  * @return {Function}          Gulp task
+ *
+ * @example
+ * const gulp = require('gulp')
+ * const tasks = require('apc-build')
+ *
+ * gulp.task('lint-js', tasks['lint-js'](gulp, ['src/js/*']))
  */
 module.exports = (gulp, path) => {
   require('./is-gulp')(gulp)

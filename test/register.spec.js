@@ -70,15 +70,6 @@ describe('Register gulp tasks', () => {
     expect(gulp.tasks['build-sass'].fn).to.be.a('function')
   })
 
-  it('Register lint-node task', () => {
-    register(gulp, {
-      nodeSrc: 'test/input/**/*.spec.js'
-    })
-    expect(Object.keys(gulp.tasks).length).to.equal(1)
-    expect(gulp.tasks['lint-node']).to.be.an('object')
-    expect(gulp.tasks['lint-node'].fn).to.be.a('function')
-  })
-
   it('Register lint-pug task', () => {
     register(gulp, {
       pugSrc: 'test/input/**/*.pug'
@@ -124,12 +115,12 @@ describe('Register gulp watchers', () => {
   })
 
   it('Register returns a function', () => {
-    const registerWatchers = register(gulp, {})
+    const registerWatchers = register(gulp, {}).registerWatchers
     expect(registerWatchers).to.be.a('function')
   })
 
   it('Throw if no gulp instance passed', () => {
-    const registerWatchers = register(gulp, {})
+    const registerWatchers = register(gulp, {}).registerWatchers
     try {
       registerWatchers()
       expect(0).to.equal(1)
@@ -141,7 +132,7 @@ describe('Register gulp watchers', () => {
   it('Registers watcher for lint-sass', () => {
     const registerWatchers = register(gulp, {
       scssSrc: 'test/input/**/*.scss'
-    })
+    }).registerWatchers
     expect(registerWatchers).to.be.a('function')
 
     const watchStub = sinon.stub(gulp, 'watch').returns(true)
@@ -157,7 +148,7 @@ describe('Register gulp watchers', () => {
     const registerWatchers = register(gulp, {
       scssSrc: 'test/input/**/*.scss',
       cssDest: 'test/output/css'
-    })
+    }).registerWatchers
     expect(registerWatchers).to.be.a('function')
 
     const watchStub = sinon.stub(gulp, 'watch').returns(true)

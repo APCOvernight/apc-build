@@ -3,10 +3,19 @@ const exec = util.promisify(require('child_process').exec)
 const gutil = require('gulp-util')
 
 /**
- * Execute lint-sass command and throw if there are errors (unless in watch mode)
- * @param  {Object}       gulp Instance of gulp
- * @param  {String}       path Path of files to lint
+ * Lint sass files using sass-lint
+ *
+ * @function lint-sass
+ *
+ * @param  {Object}       gulp Gulp instance
+ * @param  {String}       path Path of Sass files to lint and/or build
  * @return {Function}          Gulp task
+ *
+ * @example
+ * const gulp = require('gulp')
+ * const tasks = require('apc-build')
+ *
+ * gulp.task('lint-sass', tasks['lint-sass'](gulp, 'src/scss/*'))
  */
 module.exports = (gulp, path) => {
   require('./is-gulp')(gulp)

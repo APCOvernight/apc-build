@@ -9,14 +9,14 @@ const config = {
   scssIncludePaths: [],
   jsDest: 'output/js',
   cssDest: 'output/css',
-  nodeSrc: '*.js',
   showFileSizes: true,
   imgSrc: 'src/**/*',
   imgDest: 'output/img'
 }
 
-const registerWatchers = require('./gulp-tasks/register-tasks')(gulp, config)
+const register = require('./').register(gulp, config)
+console.info('Registered tasks:\n', register.tasks)
 
 gulp.task('default', () => {
-  registerWatchers(gulp)
+  register.registerWatchers(gulp)
 })

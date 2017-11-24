@@ -8,15 +8,24 @@ const size = require('gulp-size')
 const gutil = require('gulp-util')
 
 /**
- * Execute lint-sass command and throw if there are errors (unless in watch mode)
- * @param  {Object}       gulp Instance of gulp
- * @param  {Array|String} path Input source(s)
- * @param  {String}       dest Output Destination
- * @param  {Array}        scssIncludePaths Sass include paths (for frameworks etc)
- * @param  {Boolean}      showFileSizes Show file sizes in output
- * @return {Function}          Gulp task
+ * Compile sass files
+ *
+ * @function build-sass
+ *
+ * @param  {Object}       gulp              Gulp instance
+ * @param  {Array|String} path              Path of Sass files to build
+ * @param  {String}       dest              Destination for built CSS
+ * @param  {Array}        scssIncludePaths  Sass include paths (for frameworks etc)
+ * @param  {Boolean}      showFileSizes     Show file sizes in console output?
+ * @return {Function}                       Gulp task
+ *
+ * @example
+ * const gulp = require('gulp')
+ * const tasks = require('apc-build')
+ *
+ * gulp.task('build-sass', tasks['build-sass'](gulp, ['src/scss/*.scss'], 'dist/css', ['node_modules/foundation-sites/scss']))
  */
-module.exports = (gulp, path, dest, scssIncludePaths, showFileSizes) => {
+module.exports = (gulp, path, dest, scssIncludePaths, showFileSizes = true) => {
   require('./is-gulp')(gulp)
 
   return () => {

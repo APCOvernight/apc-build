@@ -8,7 +8,26 @@ const sourcemaps = require('gulp-sourcemaps')
 const gulpif = require('gulp-if')
 const gutil = require('gulp-util')
 
-module.exports = (gulp, entries, dest, destFilename = 'bundle.js', showFileSizes, browserifyIgnore = []) => {
+/**
+ * Bundle and browserify front end JS files
+ *
+ * @function build-js
+ *
+ * @param  {Object}  gulp                       Gulp instance
+ * @param  {String|Array}  entries              Path[s] of Js files to build
+ * @param  {String}  dest                       Destination for Js built files
+ * @param  {String}  [destFilename='bundle.js'] Filename for built Js file
+ * @param  {Boolean} [showFileSizes=true]       Show file sizes in console output?
+ * @param  {Array}   [browserifyIgnore=[]]      Browserify paths to ignore
+ * @return {Function}                           Gulp task
+ *
+ * @example
+ * const gulp = require('gulp')
+ * const tasks = require('apc-build')
+ *
+ * gulp.task('build-js', tasks['build-js'](gulp, ['src/js/entry.js'], 'dist/js', 'bundle.js'))
+ */
+module.exports = (gulp, entries, dest, destFilename = 'bundle.js', showFileSizes = true, browserifyIgnore = []) => {
   require('./is-gulp')(gulp)
 
   return () => {

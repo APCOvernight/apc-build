@@ -2,10 +2,19 @@ const pugLint = require('gulp-pug-linter')
 const gutil = require('gulp-util')
 
 /**
- * Execute gulp-lint-puger and throw if there are errors (unless in watch mode)
- * @param  {Object}       gulp Instance of gulp
- * @param  {Array|String} path Path(s) of pug files to lint
+ * Lint pug files using pug linter
+ *
+ * @function lint-pug
+ *
+ * @param  {Object}       gulp Gulp instance
+ * @param  {Array|String} path Path[s] of pug files to lint
  * @return {Function}          Gulp task
+ *
+ * @example
+ * const gulp = require('gulp')
+ * const tasks = require('apc-build')
+ *
+ * gulp.task('lint-pug', tasks['lint-pug'](gulp, ['app/views/*.pug']))
  */
 module.exports = (gulp, path) => {
   require('./is-gulp')(gulp)
