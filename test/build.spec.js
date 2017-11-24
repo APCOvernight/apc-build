@@ -1,4 +1,3 @@
-
 const chai = require('chai')
 const sinon = require('sinon')
 const expect = chai.expect
@@ -6,6 +5,7 @@ chai.use(require('sinon-chai'))
 const gulp = require('gulp')
 const fs = require('fs-extra')
 
+const tasks = require('../')
 const streamAsPromise = require('./stream-as-promise')
 
 let logMock
@@ -23,7 +23,7 @@ describe('Build Sass', () => {
 
   it('Should compile basic sass files', async () => {
     expect(await fs.pathExists('test/output/css')).to.equal(false)
-    const buildSass = require('../gulp-tasks/build-sass')(gulp, 'test/input/build-valid/test.scss', 'test/output/css')
+    const buildSass = tasks['build-sass'](gulp, 'test/input/build-valid/test.scss', 'test/output/css')
 
     await streamAsPromise(buildSass())
 
@@ -36,7 +36,7 @@ describe('Build Sass', () => {
 
   it('Should handle compile error', async () => {
     expect(await fs.pathExists('test/output/css')).to.equal(false)
-    const buildSass = require('../gulp-tasks/build-sass')(gulp, 'test/input/build-invalid/test.scss', 'test/output/css')
+    const buildSass = tasks['build-sass'](gulp, 'test/input/build-invalid/test.scss', 'test/output/css')
 
     try {
       await streamAsPromise(buildSass())
@@ -52,7 +52,7 @@ describe('Build Sass', () => {
 
   it('Should fail if sass paths aren\'t included', async () => {
     expect(await fs.pathExists('test/output/css')).to.equal(false)
-    const buildSass = require('../gulp-tasks/build-sass')(gulp, 'test/input/build-valid/test-foundation.scss', 'test/output/css', '')
+    const buildSass = tasks['build-sass'](gulp, 'test/input/build-valid/test-foundation.scss', 'test/output/css', '')
 
     try {
       await streamAsPromise(buildSass())
@@ -69,7 +69,7 @@ describe('Build Sass', () => {
 
   it('Should include sass paths', async () => {
     expect(await fs.pathExists('test/output/css')).to.equal(false)
-    const buildSass = require('../gulp-tasks/build-sass')(gulp, 'test/input/build-valid/test-foundation.scss', 'test/output/css', ['node_modules/foundation-sites/scss'])
+    const buildSass = tasks['build-sass'](gulp, 'test/input/build-valid/test-foundation.scss', 'test/output/css', ['node_modules/foundation-sites/scss'])
 
     await streamAsPromise(buildSass())
 
@@ -82,14 +82,14 @@ describe('Build Sass', () => {
 
   it('Should show file size', async () => {
     expect(await fs.pathExists('test/output/css')).to.equal(false)
-    const buildSass = require('../gulp-tasks/build-sass')(gulp, 'test/input/build-valid/test.scss', 'test/output/css', [], true)
+    const buildSass = tasks['build-sass'](gulp, 'test/input/build-valid/test.scss', 'test/output/css', [], true)
     await streamAsPromise(buildSass())
     expect(logMock).to.be.calledWith('\u001b[34mtest.css\u001b[39m \u001b[35m76 B\u001b[39m\u001b[90m (gzipped)\u001b[39m')
   })
 
   it('Should not show file size', async () => {
     expect(await fs.pathExists('test/output/css')).to.equal(false)
-    const buildSass = require('../gulp-tasks/build-sass')(gulp, 'test/input/build-valid/test.scss', 'test/output/css', [], false)
+    const buildSass = tasks['build-sass'](gulp, 'test/input/build-valid/test.scss', 'test/output/css', [], false)
     await streamAsPromise(buildSass())
     expect(logMock).to.not.be.calledWith('\u001b[34mtest.css\u001b[39m \u001b[35m76 B\u001b[39m\u001b[90m (gzipped)\u001b[39m')
   })
@@ -108,7 +108,7 @@ describe('Build Js', () => {
 
   it('Should compile basic js files', async () => {
     expect(await fs.pathExists('test/output/js')).to.equal(false)
-    const buildJs = require('../gulp-tasks/build-js')(gulp, 'test/input/build-valid/test.js', 'test/output/js', 'test.js')
+    const buildJs = tasks['build-js'](gulp, 'test/input/build-valid/test.js', 'test/output/js', 'test.js')
 
     await streamAsPromise(buildJs())
 
@@ -121,7 +121,7 @@ describe('Build Js', () => {
 
   it('Should show file size', async () => {
     expect(await fs.pathExists('test/output/js')).to.equal(false)
-    const buildJs = require('../gulp-tasks/build-js')(gulp, 'test/input/build-valid/test.js', 'test/output/js', 'test.js', true)
+    const buildJs = tasks['build-js'](gulp, 'test/input/build-valid/test.js', 'test/output/js', 'test.js', true)
 
     await streamAsPromise(buildJs())
 
@@ -130,7 +130,7 @@ describe('Build Js', () => {
 
   it('Should not show file size', async () => {
     expect(await fs.pathExists('test/output/js')).to.equal(false)
-    const buildJs = require('../gulp-tasks/build-js')(gulp, 'test/input/build-valid/test.js', 'test/output/js', 'test.js', false)
+    const buildJs = tasks['build-js'](gulp, 'test/input/build-valid/test.js', 'test/output/js', 'test.js', false)
 
     await streamAsPromise(buildJs())
 
@@ -139,7 +139,7 @@ describe('Build Js', () => {
 
   it('Should handle compile error', async () => {
     expect(await fs.pathExists('test/output/js')).to.equal(false)
-    const buildJs = require('../gulp-tasks/build-js')(gulp, 'test/input/build-invalid/test.js', 'test/output/js')
+    const buildJs = tasks['build-js'](gulp, 'test/input/build-invalid/test.js', 'test/output/js')
 
     try {
       await streamAsPromise(buildJs())
@@ -155,7 +155,7 @@ describe('Build Js', () => {
 
   it('Should compile multiple entries into one file', async () => {
     expect(await fs.pathExists('test/output/js')).to.equal(false)
-    const buildJs = require('../gulp-tasks/build-js')(gulp, ['test/input/build-valid/test.js', 'test/input/build-valid/test-2.js'], 'test/output/js', undefined, true, ['moment'])
+    const buildJs = tasks['build-js'](gulp, ['test/input/build-valid/test.js', 'test/input/build-valid/test-2.js'], 'test/output/js', undefined, true, ['moment'])
 
     await streamAsPromise(buildJs())
 
@@ -181,7 +181,7 @@ describe('Build Images', () => {
 
   it('Should move and minify images', async () => {
     expect(await fs.pathExists('test/output/img')).to.equal(false)
-    const buildImg = require('../gulp-tasks/build-img')(gulp, 'test/input/build-valid/*', 'test/output/img')
+    const buildImg = tasks['build-img'](gulp, 'test/input/build-valid/*', 'test/output/img')
 
     await streamAsPromise(buildImg())
 

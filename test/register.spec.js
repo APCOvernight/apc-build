@@ -1,5 +1,4 @@
-
-const register = require('../')
+const register = require('../').register
 const chai = require('chai')
 const sinon = require('sinon')
 const expect = chai.expect
