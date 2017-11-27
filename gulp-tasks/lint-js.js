@@ -1,5 +1,6 @@
 const eslint = require('gulp-eslint')
 const gutil = require('gulp-util')
+const gulpError = require('./_gulp-error')
 
 /**
  * Lint js files using eslint
@@ -27,10 +28,7 @@ module.exports = (gulp, path) => {
         if (!results.errorCount && !results.warningCount) {
           gutil.log('No JS Lint Errors')
         } else {
-          throw new gutil.PluginError({
-            plugin: 'lint-js',
-            message: 'JS Lint Errors'
-          })
+          throw gulpError('lint-js', 'JS Lint Errors')
         }
       }))
   }

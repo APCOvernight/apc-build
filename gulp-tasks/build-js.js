@@ -6,7 +6,8 @@ const buffer = require('vinyl-buffer')
 const size = require('gulp-size')
 const sourcemaps = require('gulp-sourcemaps')
 const gulpif = require('gulp-if')
-const gutil = require('gulp-util')
+const splitLog = require('./_split-log')
+const gulpError = require('./_gulp-error')
 
 /**
  * Bundle and browserify front end JS files
@@ -35,22 +36,14 @@ module.exports = (gulp, entries, dest, destFilename = 'bundle.js', showFileSizes
       entries = [entries]
     }
 
-    const b = browserify({
-      entries
-    })
+    const b = browserify({ entries })
 
-    browserifyIgnore.map(ignore => {
-      b.ignore(ignore)
-    })
+    browserifyIgnore.map(ignore => { b.ignore(ignore) })
 
     return b.bundle()
       .on('error', error => {
-        const lines = error.message.split(/\n/g)
-        lines.map(line => gutil.log(line))
-        throw new gutil.PluginError({
-          plugin: 'build-js',
-          message: 'JS Build Errors'
-        })
+        splitLog(error.message)
+        throw gulpError('build-js', 'JS Build Errors')
       })
       .pipe(source(destFilename))
       .pipe(buffer())

@@ -5,7 +5,8 @@ const postcss = require('gulp-postcss')
 const mqpacker = require('css-mqpacker')
 const gulpif = require('gulp-if')
 const size = require('gulp-size')
-const gutil = require('gulp-util')
+const splitLog = require('./_split-log')
+const gulpError = require('./_gulp-error')
 
 /**
  * Compile sass files
@@ -36,18 +37,12 @@ module.exports = (gulp, path, dest, scssIncludePaths, showFileSizes = true) => {
           includePaths: scssIncludePaths,
           outputStyle: 'compressed'
         }).on('error', error => {
-          const lines = error.message.split(/\n/g)
-          lines.map(line => gutil.log(line))
-          throw new gutil.PluginError({
-            plugin: 'build-sass',
-            message: 'Sass Build Errors'
-          })
+          splitLog(error.message)
+          throw gulpError('build-sass', 'Sass Build Errors')
         })
       )
       .pipe(
-        autoprefixer({
-          browsers: [ 'last 2 versions', 'ie >= 9' ]
-        })
+        autoprefixer({ browsers: [ 'last 2 versions', 'ie >= 9' ] })
       )
       .pipe(postcss([mqpacker]))
       .pipe(sourcemaps.write('.'))

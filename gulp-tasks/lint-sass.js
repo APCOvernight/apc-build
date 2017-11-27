@@ -1,6 +1,8 @@
 const util = require('util')
 const exec = util.promisify(require('child_process').exec)
 const gutil = require('gulp-util')
+const splitLog = require('./_split-log')
+const gulpError = require('./_gulp-error')
 
 /**
  * Lint sass files using sass-lint
@@ -27,12 +29,8 @@ module.exports = (gulp, path) => {
         return 0
       })
       .catch((err) => {
-        const errors = err.stdout.split(/\n/g)
-        errors.map(error => gutil.log(error))
-        throw new gutil.PluginError({
-          plugin: 'lint-sass',
-          message: 'Sass Lint Errors'
-        })
+        splitLog(err.stdout)
+        throw gulpError('lint-sass', 'Sass Lint Errors')
       })
   }
 }

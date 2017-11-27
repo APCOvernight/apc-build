@@ -1,5 +1,7 @@
 const pugLint = require('gulp-pug-linter')
 const gutil = require('gulp-util')
+const splitLog = require('./_split-log')
+const gulpError = require('./_gulp-error')
 
 /**
  * Lint pug files using pug linter
@@ -24,14 +26,8 @@ module.exports = (gulp, path) => {
       .pipe(pugLint())
       .pipe(pugLint.reporter(errors => {
         if (errors.length) {
-          errors.map(error => {
-            const lines = error.message.split(/\n/g)
-            lines.map(line => gutil.log(line))
-          })
-          throw new gutil.PluginError({
-            plugin: 'lint-pug',
-            message: 'Pug Lint Errors'
-          })
+          errors.map(error => splitLog(error.message))
+          throw gulpError('lint-pug', 'Pug Lint Errors')
         } else {
           gutil.log('No Pug Lint Errors')
         }
