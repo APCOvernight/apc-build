@@ -1,3 +1,8 @@
+'use strict'
+
+const watchers = []
+const tasks = []
+
 /**
  * Register gulp tasks based on a passed config object
  *
@@ -38,7 +43,7 @@
  * // }
  *
  */
-module.exports = (gulp, config) => {
+const register = (gulp, config) => {
   require('./is-gulp')(gulp)
 
   if (!config || typeof config !== 'object') {
@@ -47,71 +52,60 @@ module.exports = (gulp, config) => {
 
   const { scssSrc, jsSrc, jsEntry, pugSrc, scssIncludePaths = [], jsDest, jsDestFilename, cssDest, imgSrc, imgDest, showFileSizes = true, browserifyIgnore } = config
 
-  const watchers = []
-  const tasks = []
+  scssSrc && registerTask(gulp, 'lint-sass', scssSrc)
 
-  const registerTask = (name, ...args) => {
-    gulp.task(name, require(`./${name}`)(gulp, ...args))
-    tasks.push(name)
-    watchers.push({
-      source: args[0],
-      tasks: [name]
-    })
+  scssSrc && cssDest && registerTask(gulp, 'build-sass', scssSrc, cssDest, scssIncludePaths, showFileSizes)
+
+  pugSrc && registerTask(gulp, 'lint-pug', pugSrc)
+
+  jsSrc && registerTask(gulp, 'lint-js', jsSrc)
+
+  jsEntry && jsDest && registerTask(gulp, 'build-js', jsEntry, jsDest, jsDestFilename, showFileSizes, browserifyIgnore)
+
+  imgSrc && imgDest && registerTask(gulp, 'build-img', imgSrc, imgDest)
+
+  return {
+    tasks,
+    registerWatchers: registerWatchers(watchers)
   }
+}
 
-  if (scssSrc) {
-    registerTask('lint-sass', scssSrc)
-  }
+const registerTask = (gulp, name, ...args) => {
+  gulp.task(name, require(`./${name}`)(gulp, ...args))
+  tasks.push(name)
+  watchers.push({
+    source: args[0],
+    tasks: [name]
+  })
+}
 
-  if (scssSrc && cssDest) {
-    registerTask('build-sass', scssSrc, cssDest, scssIncludePaths, showFileSizes)
-  }
-
-  if (pugSrc) {
-    registerTask('lint-pug', pugSrc)
-  }
-
-  if (jsSrc) {
-    registerTask('lint-js', jsSrc)
-  }
-
-  if (jsEntry && jsDest) {
-    registerTask('build-js', jsEntry, jsDest, jsDestFilename, showFileSizes, browserifyIgnore)
-  }
-
-  if (imgSrc && imgDest) {
-    registerTask('build-img', imgSrc, imgDest)
-  }
-
-  /**
-   * Register watchers corresponding to the tasks already set up
-   *
-   * @function register.registerWatchers
-   *
-   * @param  {Object} gulp Gulp instance
-   *
-   * @example
-   * const gulp = require('gulp')
-   *
-   * const register = require('apc-build').register(gulp, config)
-   *
-   * // Watchers corresponding to config values
-   * // will be registered within watch task
-   * gulp.task('watch', () => {
-   *   register.registerWatchers(gulp)
-   * })
-   *
-   */
-  const registerWatchers = gulp => {
+/**
+ * Register watchers corresponding to the tasks already set up
+ *
+ * @function register.registerWatchers
+ *
+ * @param  {Object} gulp Gulp instance
+ *
+ * @example
+ * const gulp = require('gulp')
+ *
+ * const register = require('apc-build').register(gulp, config)
+ *
+ * // Watchers corresponding to config values
+ * // will be registered within watch task
+ * gulp.task('watch', () => {
+ *   register.registerWatchers(gulp)
+ * })
+ *
+ */
+const registerWatchers = watchers => {
+  return gulp => {
     require('./is-gulp')(gulp)
 
     watchers.forEach(watcher => {
       gulp.watch(watcher.source, watcher.tasks)
     })
   }
-
-  return {
-    tasks,
-    registerWatchers
-  }
 }
+
+module.exports = register
