@@ -50,40 +50,37 @@ module.exports = (gulp, config) => {
   const watchers = []
   const tasks = []
 
+  const registerTask = (name, ...args) => {
+    gulp.task(name, require(`./${name}`)(gulp, ...args))
+    tasks.push(name)
+    watchers.push({
+      source: args[0],
+      tasks: [name]
+    })
+  }
+
   if (scssSrc) {
-    gulp.task('lint-sass', require('./lint-sass')(gulp, scssSrc))
-    tasks.push('lint-sass')
-    watchers.push({source: scssSrc, tasks: ['lint-sass']})
+    registerTask('lint-sass', scssSrc)
   }
 
   if (scssSrc && cssDest) {
-    gulp.task('build-sass', require('./build-sass')(gulp, scssSrc, cssDest, scssIncludePaths, showFileSizes))
-    tasks.push('build-sass')
-    watchers.push({source: scssSrc, tasks: ['build-sass']})
+    registerTask('build-sass', scssSrc, cssDest, scssIncludePaths, showFileSizes)
   }
 
   if (pugSrc) {
-    gulp.task('lint-pug', require('./lint-pug')(gulp, pugSrc))
-    tasks.push('lint-pug')
-    watchers.push({source: pugSrc, tasks: ['lint-pug']})
+    registerTask('lint-pug', pugSrc)
   }
 
   if (jsSrc) {
-    gulp.task('lint-js', require('./lint-js')(gulp, jsSrc))
-    tasks.push('lint-js')
-    watchers.push({source: jsSrc, tasks: ['lint-js']})
+    registerTask('lint-js', jsSrc)
   }
 
   if (jsEntry && jsDest) {
-    gulp.task('build-js', require('./build-js')(gulp, jsEntry, jsDest, jsDestFilename, showFileSizes, browserifyIgnore))
-    tasks.push('build-js')
-    watchers.push({source: jsEntry, tasks: ['build-js']})
+    registerTask('build-js', jsEntry, jsDest, jsDestFilename, showFileSizes, browserifyIgnore)
   }
 
   if (imgSrc && imgDest) {
-    gulp.task('build-img', require('./build-img')(gulp, imgSrc, imgDest))
-    tasks.push('build-img')
-    watchers.push({source: imgSrc, tasks: ['build-img']})
+    registerTask('build-img', imgSrc, imgDest)
   }
 
   /**
