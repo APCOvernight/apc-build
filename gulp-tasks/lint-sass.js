@@ -21,7 +21,7 @@ module.exports = (gulp, path) => {
   require('./is-gulp')(gulp)
 
   return () => {
-    return exec(`sass-lint -v -q ${path}`)
+    return exec(`node_modules/.bin/sass-lint -v -q ${path}`)
       .then(() => {
         gutil.log('No Sass Lint Errors')
         return 0
