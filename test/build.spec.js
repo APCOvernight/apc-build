@@ -84,7 +84,11 @@ describe('Build Sass', () => {
     expect(await fs.pathExists('test/output/css')).to.equal(false)
     const buildSass = tasks['build-sass'](gulp, 'test/input/build-valid/test.scss', 'test/output/css', [], true)
     await streamAsPromise(buildSass())
-    expect(logMock).to.be.calledWith('\u001b[34mtest.css\u001b[39m \u001b[35m76 B\u001b[39m\u001b[90m (gzipped)\u001b[39m')
+
+    expect(logMock.args[0][0]).to.contain('test.css')
+    expect(logMock.args[0][0]).to.contain('gzipped')
+    expect(logMock.args[1][0]).to.contain('test.css')
+    expect(logMock.args[1][0]).to.contain('gzipped')
   })
 
   it('Should not show file size', async () => {
@@ -125,7 +129,10 @@ describe('Build Js', () => {
 
     await streamAsPromise(buildJs())
 
-    expect(logMock).to.be.calledWith('\u001b[34mtest.js\u001b[39m \u001b[35m349 B\u001b[39m\u001b[90m (gzipped)\u001b[39m')
+    expect(logMock.args[0][0]).to.contain('test.js')
+    expect(logMock.args[0][0]).to.contain('gzipped')
+    expect(logMock.args[1][0]).to.contain('test.js')
+    expect(logMock.args[1][0]).to.contain('gzipped')
   })
 
   it('Should not show file size', async () => {
