@@ -4,7 +4,7 @@
   "description": "Gulp build scripts for front end APC projects",
   "main": "index.js",
   "scripts": {
-    "test": "yarn lint && nyc mocha && nyc report --reporter=text-lcov | coveralls",
+    "test": "yarn lint && nyc mocha && nyc report --reporter=text-lcov | coveralls && nyc report --reporter=text-lcov | codeclimate-test-reporter",
     "lint": "eslint test/*.spec.js gulp-tasks/*.js"
   },
   "repository": {
