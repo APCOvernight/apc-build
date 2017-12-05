@@ -57,7 +57,7 @@
     "codeclimate-test-reporter": "0.5.0",
     "coveralls": "3.0.0",
     "foundation-sites": "6.4.4-rc1",
-    "fs-extra": "4.0.2",
+    "fs-extra": "4.0.3",
     "mocha": "4.0.1",
     "sinon": "4.1.2",
     "sinon-chai": "2.14.0"
