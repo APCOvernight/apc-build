@@ -22,7 +22,7 @@ module.exports = (gulp, path) => {
 
   return () => {
     return gulp.src(path)
-      .pipe(eslint('apc'))
+      .pipe(eslint())
       .pipe(eslint.format('stylish'))
       .pipe(eslint.results(results => {
         if (!results.errorCount && !results.warningCount) {
