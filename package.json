@@ -47,7 +47,7 @@
     "gulp-size": "2.1.0",
     "gulp-sourcemaps": "2.6.1",
     "gulp-uglify": "3.0.0",
-    "nyc": "11.3.0",
+    "nyc": "11.4.1",
     "vinyl-buffer": "1.0.0",
     "vinyl-source-stream": "1.1.0"
   },
