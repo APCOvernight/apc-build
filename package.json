@@ -44,7 +44,7 @@
     "gulp-postcss": "7.0.0",
     "gulp-pug-linter": "0.5.1",
     "gulp-sass": "3.1.0",
-    "gulp-size": "2.1.0",
+    "gulp-size": "3.0.0",
     "gulp-sourcemaps": "2.6.2",
     "gulp-uglify": "3.0.0",
     "nyc": "11.3.0",
