@@ -1,6 +1,6 @@
 {
   "name": "apc-build",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Gulp build scripts for front end APC projects",
   "main": "index.js",
   "scripts": {
@@ -45,11 +45,11 @@
     "gulp-pug-linter": "0.5.1",
     "gulp-sass": "3.1.0",
     "gulp-size": "2.1.0",
-    "gulp-sourcemaps": "2.6.1",
+    "gulp-sourcemaps": "2.6.2",
     "gulp-uglify": "3.0.0",
     "nyc": "11.3.0",
-    "vinyl-buffer": "1.0.0",
-    "vinyl-source-stream": "1.1.0"
+    "vinyl-source-stream": "2.0.0",
+    "vinyl-buffer": "1.0.1"
   },
   "devDependencies": {
     "apc-style": "0.4.3",
@@ -58,7 +58,7 @@
     "coveralls": "3.0.0",
     "foundation-sites": "6.4.4-rc1",
     "fs-extra": "5.0.0",
-    "mocha": "4.0.1",
+    "mocha": "4.1.0",
     "sinon": "4.1.3",
     "sinon-chai": "2.14.0"
   },
