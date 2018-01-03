@@ -4,6 +4,10 @@ const expect = chai.expect
 chai.use(require('sinon-chai'))
 const gulp = require('gulp')
 
+gulp.reset = () => {
+  gulp._registry._tasks = {}
+}
+
 const tasks = require('../')
 const streamAsPromise = require('./stream-as-promise')
 

@@ -5,6 +5,10 @@ const expect = chai.expect
 chai.use(require('sinon-chai'))
 const gulp = require('gulp')
 
+gulp.reset = () => {
+  gulp._registry._tasks = {}
+}
+
 describe('Register gulp tasks', () => {
   beforeEach(() => {
     gulp.reset()
@@ -48,16 +52,15 @@ describe('Register gulp tasks', () => {
 
   it('Empty config does not register any tasks', () => {
     register(gulp, {})
-    expect(Object.keys(gulp.tasks).length).to.equal(0)
+    expect(Object.keys(gulp._registry._tasks).length).to.equal(0)
   })
 
   it('Register lint-sass task', () => {
     register(gulp, {
       scssSrc: 'test/input/**/*.scss'
     })
-    expect(Object.keys(gulp.tasks).length).to.equal(1)
-    expect(gulp.tasks['lint-sass']).to.be.an('object')
-    expect(gulp.tasks['lint-sass'].fn).to.be.a('function')
+    expect(Object.keys(gulp._registry._tasks).length).to.equal(1)
+    expect(gulp._registry._tasks['lint-sass']).to.be.a('function')
   })
 
   it('Register build-sass task', () => {
@@ -65,27 +68,24 @@ describe('Register gulp tasks', () => {
       scssSrc: 'test/input/**/*.scss',
       cssDest: 'test/output/css'
     })
-    expect(Object.keys(gulp.tasks).length).to.equal(2)
-    expect(gulp.tasks['build-sass']).to.be.an('object')
-    expect(gulp.tasks['build-sass'].fn).to.be.a('function')
+    expect(Object.keys(gulp._registry._tasks).length).to.equal(2)
+    expect(gulp._registry._tasks['build-sass']).to.be.a('function')
   })
 
   it('Register lint-pug task', () => {
     register(gulp, {
       pugSrc: 'test/input/**/*.pug'
     })
-    expect(Object.keys(gulp.tasks).length).to.equal(1)
-    expect(gulp.tasks['lint-pug']).to.be.an('object')
-    expect(gulp.tasks['lint-pug'].fn).to.be.a('function')
+    expect(Object.keys(gulp._registry._tasks).length).to.equal(1)
+    expect(gulp._registry._tasks['lint-pug']).to.be.a('function')
   })
 
   it('Register lint-js task', () => {
     register(gulp, {
       jsSrc: 'test/input/**/*.spec.js'
     })
-    expect(Object.keys(gulp.tasks).length).to.equal(1)
-    expect(gulp.tasks['lint-js']).to.be.an('object')
-    expect(gulp.tasks['lint-js'].fn).to.be.a('function')
+    expect(Object.keys(gulp._registry._tasks).length).to.equal(1)
+    expect(gulp._registry._tasks['lint-js']).to.be.a('function')
   })
 
   it('Register build-js task', () => {
@@ -93,9 +93,8 @@ describe('Register gulp tasks', () => {
       jsEntry: 'test/input/**/*.spec.js',
       jsDest: 'test/output/js'
     })
-    expect(Object.keys(gulp.tasks).length).to.equal(1)
-    expect(gulp.tasks['build-js']).to.be.an('object')
-    expect(gulp.tasks['build-js'].fn).to.be.a('function')
+    expect(Object.keys(gulp._registry._tasks).length).to.equal(1)
+    expect(gulp._registry._tasks['build-js']).to.be.a('function')
   })
 
   it('Register build-img task', () => {
@@ -103,9 +102,8 @@ describe('Register gulp tasks', () => {
       imgSrc: 'test/input/**/*',
       imgDest: 'test/output/img'
     })
-    expect(Object.keys(gulp.tasks).length).to.equal(1)
-    expect(gulp.tasks['build-img']).to.be.an('object')
-    expect(gulp.tasks['build-img'].fn).to.be.a('function')
+    expect(Object.keys(gulp._registry._tasks).length).to.equal(1)
+    expect(gulp._registry._tasks['build-img']).to.be.a('function')
   })
 })
 

@@ -5,6 +5,10 @@ chai.use(require('sinon-chai'))
 const gulp = require('gulp')
 const fs = require('fs-extra')
 
+gulp.reset = () => {
+  gulp._registry._tasks = {}
+}
+
 const tasks = require('../')
 const streamAsPromise = require('./stream-as-promise')
 
