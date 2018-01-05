@@ -38,7 +38,7 @@ module.exports = (gulp, entries, dest, destFilename = 'bundle.js', showFileSizes
 
     const b = browserify({ entries })
 
-    browserifyIgnore.map(ignore => { b.ignore(ignore) })
+    b.ignore(browserifyIgnore)
 
     return b.bundle()
       .on('error', error => {
