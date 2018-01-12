@@ -17,7 +17,7 @@ describe('Lint Sass', () => {
   beforeEach(() => {
     gulp.reset()
 
-    logMock = sinon.stub(require('gulp-util'), 'log')
+    logMock = sinon.spy(console, 'log')
   })
 
   afterEach(() => {
@@ -48,7 +48,7 @@ describe('Lint Sass', () => {
 describe('Lint Pug', () => {
   beforeEach(() => {
     gulp.reset()
-    logMock = sinon.stub(require('gulp-util'), 'log')
+    logMock = sinon.spy(console, 'log')
   })
 
   afterEach(() => {
@@ -77,7 +77,7 @@ describe('Lint Pug', () => {
 describe('Lint JS', () => {
   beforeEach(() => {
     gulp.reset()
-    logMock = sinon.stub(require('gulp-util'), 'log')
+    logMock = sinon.spy(console, 'log')
   })
 
   afterEach(() => {

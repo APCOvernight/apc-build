@@ -17,7 +17,7 @@ let logMock
 describe('Build Sass', () => {
   beforeEach(async () => {
     gulp.reset()
-    logMock = sinon.stub(require('gulp-util'), 'log')
+    logMock = sinon.spy(console, 'log')
     await fs.emptyDir('test/output')
   })
 
@@ -106,7 +106,7 @@ describe('Build Sass', () => {
 describe('Build Js', () => {
   beforeEach(async () => {
     gulp.reset()
-    logMock = sinon.stub(require('gulp-util'), 'log')
+    logMock = sinon.spy(console, 'log')
     await fs.emptyDir('test/output')
   })
 
@@ -182,7 +182,7 @@ describe('Build Js', () => {
 describe('Build Images', () => {
   beforeEach(async () => {
     gulp.reset()
-    logMock = sinon.stub(require('gulp-util'), 'log')
+    logMock = sinon.spy(console, 'log')
     await fs.emptyDir('test/output')
   })
 
