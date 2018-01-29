@@ -28,7 +28,7 @@
     "yarn": "^1.0.0"
   },
   "peerDependencies": {
-    "apc-style": "^0.4.3",
+    "apc-style": ">=0.4.3",
     "gulp": "^4.0.0"
   },
   "dependencies": {
