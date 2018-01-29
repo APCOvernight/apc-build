@@ -70,6 +70,12 @@ const register = (gulp, config) => {
   }
 }
 
+/**
+ * Register a task against the given gulp task
+ * @param  {Object} gulp Gulp instance
+ * @param  {String} name Name of task
+ * @param  {Mixed} args Passed to gulp task
+ */
 const registerTask = (gulp, name, ...args) => {
   gulp.task(name, require(`./${name}`)(gulp, ...args))
   tasks.push(name)
@@ -84,7 +90,8 @@ const registerTask = (gulp, name, ...args) => {
  *
  * @function register.registerWatchers
  *
- * @param  {Object} gulp Gulp instance
+ * @param  {Array} watchers Gulp instance
+ * @return {Function}
  *
  * @example
  * const gulp = require('gulp')
@@ -99,6 +106,9 @@ const registerTask = (gulp, name, ...args) => {
  *
  */
 const registerWatchers = watchers => {
+  /**
+   * @param  {Object} gulp Gulp instance
+   */
   return gulp => {
     require('./is-gulp')(gulp)
 
