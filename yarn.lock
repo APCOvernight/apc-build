@@ -170,9 +170,9 @@ apc-style@1.0.1:
     pug-lint "2.5.0"
     sass-lint "1.12.1"
 
-apc-test@^1.0.0:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/apc-test/-/apc-test-1.0.1.tgz#e8a7e22717504918afa397ee24a87f7d802bf930"
+apc-test@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/apc-test/-/apc-test-1.0.2.tgz#bbe64af32ea903f30bd487f0ae99f4db4e6d6e33"
   dependencies:
     chai "4.1.2"
     codeclimate-test-reporter "0.5.0"
