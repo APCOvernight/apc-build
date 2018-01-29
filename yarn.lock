@@ -162,11 +162,11 @@ anymatch@^2.0.0:
     micromatch "^3.1.4"
     normalize-path "^2.1.1"
 
-apc-style@0.4.4:
-  version "0.4.4"
-  resolved "https://registry.yarnpkg.com/apc-style/-/apc-style-0.4.4.tgz#7f0083d0d2cb4e4c62eb8454468031f9bc8af004"
+apc-style@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/apc-style/-/apc-style-1.0.0.tgz#ba45d3b600cfc9a9f5e9175892f18d835e71f369"
   dependencies:
-    eslint-config-apc "0.1.1"
+    eslint-config-apc "1.0.0"
     pug-lint "2.5.0"
     sass-lint "1.12.1"
 
@@ -2629,9 +2629,9 @@ escope@^3.6.0:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
-eslint-config-apc@0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/eslint-config-apc/-/eslint-config-apc-0.1.1.tgz#f4eaff9b010786e863465abc114b6b8bcf132420"
+eslint-config-apc@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-apc/-/eslint-config-apc-1.0.0.tgz#ea75552def1862278180dad6a6b12b91968f7b40"
   dependencies:
     eslint "4.16.0"
     eslint-config-standard "10.2.1"
