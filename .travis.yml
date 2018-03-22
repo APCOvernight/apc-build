@@ -10,3 +10,7 @@ before_script: greenkeeper-lockfile-update
 after_script:
   - greenkeeper-lockfile-upload
   - yarn run coverage
+notifications:
+    webhooks: https://www.travisbuddy.com/
+    on_success: never
+    
