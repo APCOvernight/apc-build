@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "yarn lint && nyc mocha",
-    "coverage": "nyc report --reporter=text-lcov | coveralls && nyc report --reporter=text-lcov | codeclimate-test-reporter",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
     "lint": "eslint test/*.spec.js gulp-tasks/*.js"
   },
   "repository": {
@@ -86,7 +86,8 @@
       "text",
       "text-summary",
       "html",
-      "cobertura"
+      "cobertura",
+      "lcov"
     ],
     "cache": true
   }
