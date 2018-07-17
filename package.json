@@ -35,7 +35,7 @@
     "babel-core": "6.26.0",
     "babel-env": "2.4.1",
     "browserify": "16.2.0",
-    "css-mqpacker": "6.0.2",
+    "css-mqpacker": "7.0.0",
     "gulp-autoprefixer": "5.0.0",
     "gulp-babel": "7.0.1",
     "gulp-eslint": "4.0.2",
