@@ -24,13 +24,13 @@ module.exports = (gulp, path) => {
   return () => {
     return gulp.src(path)
       .pipe(pugLint())
-      .pipe(pugLint.reporter(errors => {
+      .pipe(pugLint({ reporter: (errors) => {
         if (errors.length) {
           errors.map(error => splitLog(error.message))
           throw gulpError('lint-pug', 'Pug Lint Errors')
         } else {
           gutil.log('No Pug Lint Errors')
         }
-      }))
+      }}))
   }
 }
