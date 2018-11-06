@@ -1,6 +1,7 @@
 const util = require('util')
 const exec = util.promisify(require('child_process').exec)
-const gutil = require('gulp-util')
+const log = require('fancy-log')
+
 const splitLog = require('./_split-log')
 const gulpError = require('./_gulp-error')
 
@@ -25,7 +26,7 @@ module.exports = (gulp, path) => {
   return () => {
     return exec(`node_modules/.bin/sass-lint -v -q ${path}`)
       .then(() => {
-        gutil.log('No Sass Lint Errors')
+        log('No Sass Lint Errors')
         return 0
       })
       .catch((err) => {

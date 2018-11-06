@@ -1,4 +1,4 @@
-const gutil = require('gulp-util')
+const PluginError = require('plugin-error')
 
 /**
  * Generate a gulp plugin error
@@ -7,8 +7,8 @@ const gutil = require('gulp-util')
  * @return {Error}          PluginError
  */
 module.exports = (plugin, message) => {
-  return new gutil.PluginError({
+  return new PluginError(
     plugin,
     message
-  })
+  )
 }

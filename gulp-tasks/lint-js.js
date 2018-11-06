@@ -1,5 +1,5 @@
 const eslint = require('gulp-eslint')
-const gutil = require('gulp-util')
+const log = require('fancy-log')
 const gulpError = require('./_gulp-error')
 
 /**
@@ -26,7 +26,7 @@ module.exports = (gulp, path) => {
       .pipe(eslint.format('stylish'))
       .pipe(eslint.results(results => {
         if (!results.errorCount && !results.warningCount) {
-          gutil.log('No JS Lint Errors')
+          log('No JS Lint Errors')
         } else {
           throw gulpError('lint-js', 'JS Lint Errors')
         }
