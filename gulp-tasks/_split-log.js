@@ -1,4 +1,4 @@
-const gutil = require('gulp-util')
+const log = require('fancy-log')
 
 /**
  * Split stdout output by line and log using gulp-util
@@ -7,5 +7,5 @@ const gutil = require('gulp-util')
  */
 module.exports = stdout => {
   const errors = stdout.split(/\n/g)
-  return errors.map(error => gutil.log(error))
+  return errors.map(error => log(error))
 }

@@ -1,5 +1,5 @@
 const pugLint = require('gulp-pug-linter')
-const gutil = require('gulp-util')
+const log = require('fancy-log')
 const splitLog = require('./_split-log')
 const gulpError = require('./_gulp-error')
 
@@ -29,7 +29,7 @@ module.exports = (gulp, path) => {
           errors.map(error => splitLog(error.message))
           throw gulpError('lint-pug', 'Pug Lint Errors')
         } else {
-          gutil.log('No Pug Lint Errors')
+          log('No Pug Lint Errors')
         }
       }}))
   }
