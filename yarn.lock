@@ -3822,6 +3822,7 @@ gulp-if@2.0.2:
     gulp-match "^1.0.3"
     ternary-stream "^2.0.1"
     through2 "^2.0.1"
+
 gulp-imagemin@5.0.3:
   version "5.0.3"
   resolved "https://registry.yarnpkg.com/gulp-imagemin/-/gulp-imagemin-5.0.3.tgz#b8236aff523eebd2d4b552a814a35df07ee710bc"
@@ -3855,14 +3856,14 @@ gulp-postcss@7.0.1:
     postcss-load-config "^1.2.0"
     vinyl-sourcemaps-apply "^0.2.1"
 
-gulp-pug-linter@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/gulp-pug-linter/-/gulp-pug-linter-1.0.0.tgz#e597eb095046131ceb9d89a01bb0b518c749979c"
+gulp-pug-linter@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/gulp-pug-linter/-/gulp-pug-linter-1.1.0.tgz#03ed82b1d2b922f9f51aa40741447d2aa80378aa"
   dependencies:
     fancy-log "^1.3.2"
     plugin-error "^1.0.1"
     pug-lint "^2.5.0"
-    through2 "^2.0.3"
+    through2 "^3.0.0"
 
 gulp-sass@4.0.1:
   version "4.0.1"
@@ -6434,6 +6435,14 @@ read-pkg@^2.0.0:
     normalize-package-data "^2.3.2"
     path-type "^2.0.0"
 
+"readable-stream@2 || 3":
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-3.0.6.tgz#351302e4c68b5abd6a2ed55376a7f9a25be3057a"
+  dependencies:
+    inherits "^2.0.3"
+    string_decoder "^1.1.1"
+    util-deprecate "^1.0.1"
+
 readable-stream@^1.1.7:
   version "1.1.14"
   resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-1.1.14.tgz#7cf4c54ef648e3813084c636dd2079e166c081d9"
@@ -7640,6 +7649,13 @@ through2@2.X, through2@^2.0.0, through2@^2.0.1, through2@^2.0.3, through2@~2.0.0
     readable-stream "^2.1.5"
     xtend "~4.0.1"
 
+through2@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/through2/-/through2-3.0.0.tgz#468b461df9cd9fcc170f22ebf6852e467e578ff2"
+  dependencies:
+    readable-stream "2 || 3"
+    xtend "~4.0.1"
+
 "through@>=2.2.7 <3", through@^2.3.6:
   version "2.3.8"
   resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
@@ -7940,7 +7956,7 @@ user-home@^2.0.0:
   dependencies:
     os-homedir "^1.0.0"
 
-util-deprecate@~1.0.1:
+util-deprecate@^1.0.1, util-deprecate@~1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
 
