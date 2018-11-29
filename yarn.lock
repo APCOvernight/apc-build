@@ -189,9 +189,9 @@ anymatch@^2.0.0:
     micromatch "^3.1.4"
     normalize-path "^2.1.1"
 
-apc-style@1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/apc-style/-/apc-style-1.2.0.tgz#72cc6a3ddc2b29eaf475b6a204e415976beb5abe"
+apc-style@1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/apc-style/-/apc-style-1.3.0.tgz#b4085be8a5127e3012c9a528afb86c1068a6d002"
   dependencies:
     eslint-config-apc "1.1.0"
     gently-copy "^2.3.1"
@@ -3822,6 +3822,7 @@ gulp-if@2.0.2:
     gulp-match "^1.0.3"
     ternary-stream "^2.0.1"
     through2 "^2.0.1"
+
 gulp-imagemin@5.0.3:
   version "5.0.3"
   resolved "https://registry.yarnpkg.com/gulp-imagemin/-/gulp-imagemin-5.0.3.tgz#b8236aff523eebd2d4b552a814a35df07ee710bc"
