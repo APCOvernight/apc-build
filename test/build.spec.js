@@ -17,7 +17,7 @@ let logMock
 describe('Build Sass', () => {
   beforeEach(async () => {
     gulp.reset()
-    logMock = sinon.spy(console, 'log')
+    logMock = sinon.spy(process.stdout, 'write')
     await fs.emptyDir('test/output')
   })
 
@@ -46,10 +46,10 @@ describe('Build Sass', () => {
       await streamAsPromise(buildSass())
       expect(0).to.equal(1)
     } catch (e) {
-      expect(e.message).to.equal('Sass Build Errors')
+      expect(e.message).to.have.string('Sass Build Errors')
     }
 
-    expect(logMock).to.be.calledWith('Error: 25px*px isn\'t a valid CSS value.')
+    expect(logMock.getCall(3).args[0]).to.equal('Error: 25px*px isn\'t a valid CSS value.\n')
     expect(await fs.pathExists('test/output/css/test.css')).to.equal(false)
     expect(await fs.pathExists('test/output/css/test.css.map')).to.equal(false)
   })
@@ -64,9 +64,7 @@ describe('Build Sass', () => {
     } catch (e) {
       expect(e.message).to.equal('Sass Build Errors')
     }
-
-    expect(logMock).to.be.calledWith('Error: File to import not found or unreadable: util/mixins.')
-
+    expect(logMock.getCall(3).args[0]).to.equal('Error: File to import not found or unreadable: util/mixins.\n')
     expect(await fs.pathExists('test/output/css/test-foundation.css')).to.equal(false)
     expect(await fs.pathExists('test/output/css/test-foundation.css.map')).to.equal(false)
   })
@@ -89,10 +87,10 @@ describe('Build Sass', () => {
     const buildSass = tasks['build-sass'](gulp, 'test/input/build-valid/test.scss', 'test/output/css', [], true)
     await streamAsPromise(buildSass())
 
-    expect(logMock.args[0][0]).to.contain('test.css')
-    expect(logMock.args[0][0]).to.contain('gzipped')
-    expect(logMock.args[1][0]).to.contain('test.css')
+    expect(logMock.args[1][0]).to.contain('test.css.map')
     expect(logMock.args[1][0]).to.contain('gzipped')
+    expect(logMock.args[3][0]).to.contain('test.css')
+    expect(logMock.args[3][0]).to.contain('gzipped')
   })
 
   it('Should not show file size', async () => {
@@ -101,12 +99,12 @@ describe('Build Sass', () => {
     await streamAsPromise(buildSass())
     expect(logMock).to.not.be.calledWith('\u001b[34mtest.css\u001b[39m \u001b[35m76 B\u001b[39m\u001b[90m (gzipped)\u001b[39m')
   })
-})
+}).timeout(0)
 
 describe('Build Js', () => {
   beforeEach(async () => {
     gulp.reset()
-    logMock = sinon.spy(console, 'log')
+    logMock = sinon.spy(process.stdout, 'write')
     await fs.emptyDir('test/output')
   })
 
@@ -132,11 +130,10 @@ describe('Build Js', () => {
     const buildJs = tasks['build-js'](gulp, 'test/input/build-valid/test.js', 'test/output/js', 'test.js', true)
 
     await streamAsPromise(buildJs())
-
-    expect(logMock.args[0][0]).to.contain('test.js')
-    expect(logMock.args[0][0]).to.contain('gzipped')
-    expect(logMock.args[1][0]).to.contain('test.js')
+    expect(logMock.args[1][0]).to.contain('test.js.map')
     expect(logMock.args[1][0]).to.contain('gzipped')
+    expect(logMock.args[3][0]).to.contain('test.js')
+    expect(logMock.args[3][0]).to.contain('gzipped')
   })
 
   it('Should not show file size', async () => {
@@ -159,7 +156,7 @@ describe('Build Js', () => {
       expect(e.message).to.equal('JS Build Errors')
     }
 
-    expect(logMock).to.be.calledWith('Unexpected token')
+    expect(logMock.args[1][0]).to.equal('Unexpected token\n')
     expect(await fs.pathExists('test/output/js/test.js')).to.equal(false)
     expect(await fs.pathExists('test/output/js/test.js.map')).to.equal(false)
   })
@@ -177,12 +174,12 @@ describe('Build Js', () => {
     expect(js).to.contain('function(r,e,n){console.log(25)}')
     expect(js).to.contain('function(r,e,n){console.log(16)}')
   })
-})
+}).timeout(0)
 
 describe('Build Images', () => {
   beforeEach(async () => {
     gulp.reset()
-    logMock = sinon.spy(console, 'log')
+    logMock = sinon.spy(process.stdout, 'write')
     await fs.emptyDir('test/output')
   })
 
@@ -197,6 +194,6 @@ describe('Build Images', () => {
     await streamAsPromise(buildImg())
 
     expect(await fs.pathExists('test/output/img/test.jpg')).to.equal(true)
-    expect(logMock).to.be.calledWith('gulp-imagemin:')
+    expect(logMock.args[1][0]).to.have.string('gulp-imagemin: Minified 1 image')
   })
-})
+}).timeout(0)
