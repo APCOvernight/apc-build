@@ -2,7 +2,7 @@ language: node_js
 node_js:
 # - 'lts/*'
 # - 'node'
-  - "8"
+#- "8"
   - "10"
 before_install:
   - curl -o- -L https://yarnpkg.com/install.sh | bash -s
