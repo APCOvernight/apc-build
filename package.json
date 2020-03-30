@@ -55,7 +55,7 @@
   "devDependencies": {
     "apc-style": "1.2.0",
     "apc-test": "1.1.0",
-    "foundation-sites": "6.4.4-rc1",
+    "foundation-sites": "6.6.2",
     "fs-extra": "5.0.0",
     "gulp": "4.0.0"
   },
