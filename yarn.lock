@@ -3813,13 +3813,10 @@ form-data@~2.3.2:
     combined-stream "^1.0.6"
     mime-types "^2.1.12"
 
-foundation-sites@6.4.4-rc1:
-  version "6.4.4-rc1"
-  resolved "https://registry.yarnpkg.com/foundation-sites/-/foundation-sites-6.4.4-rc1.tgz#8b645679d6f8e59717b22abea14accc4e32eefea"
-  integrity sha512-26cL66QFNqMVwM7bmIEqq4jiW+6CkIeW719ci1pchdJ4UK0Om+3Jl7MhkX/lzdzRHB75f2m1IK9lxk3JGOwApA==
-  dependencies:
-    jquery ">=3.0.0"
-    what-input "^4.1.3"
+foundation-sites@6.6.3:
+  version "6.6.3"
+  resolved "https://registry.yarnpkg.com/foundation-sites/-/foundation-sites-6.6.3.tgz#8ca5f246357db69e6a0e73351ce06aa8acce6540"
+  integrity sha512-8X93wUAmUg1HhVv8uWMWnwoBLSQWSmFImJencneIZDctswn724Bq/MV1cbPZN/GFWGOB/9ngoQHztfzd4+ovCg==
 
 fragment-cache@^0.2.1:
   version "0.2.1"
@@ -5282,11 +5279,6 @@ jpegtran-bin@^4.0.0:
     bin-build "^3.0.0"
     bin-wrapper "^4.0.0"
     logalot "^2.0.0"
-
-jquery@>=3.0.0:
-  version "3.3.1"
-  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
-  integrity sha512-Ubldcmxp5np52/ENotGxlLe6aGMvmF4R8S6tZjsP6Knsaxd/xp3Zrh50cG93lR6nPXyUFwzN3ZSOQI0wRJNdGg==
 
 js-base64@^2.1.8:
   version "2.5.0"
@@ -8947,11 +8939,6 @@ void-elements@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/void-elements/-/void-elements-2.0.1.tgz#c066afb582bb1cb4128d60ea92392e94d5e9dbec"
   integrity sha1-wGavtYK7HLQSjWDqkjkulNXp2+w=
-
-what-input@^4.1.3:
-  version "4.3.1"
-  resolved "https://registry.yarnpkg.com/what-input/-/what-input-4.3.1.tgz#b8ea7554ba1d9171887c4c6addf28185fec3d31d"
-  integrity sha512-7KD71RWNRWI9M08shZ8+n/2UjO5amwsG9PMSXWz0iIlH8H2DVbHE8Z2tW1RqQa0kIwdeqdUIffFz7crDfkcbAw==
 
 which-module@^1.0.0:
   version "1.0.0"
