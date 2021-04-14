@@ -1,6 +1,6 @@
 {
   "name": "apc-build",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "Gulp build scripts for front end APC projects",
   "main": "index.js",
   "scripts": {
