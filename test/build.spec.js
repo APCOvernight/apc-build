@@ -62,9 +62,9 @@ describe('Build Sass', () => {
       await streamAsPromise(buildSass())
       expect(0).to.equal(1)
     } catch (e) {
-      expect(e.message).to.equal('Sass Build Errors')
+      expect(e.dartException.message).to.equal('Sass Build Errors')
     }
-    expect(logMock.getCall(3).args[0]).to.equal('Error: File to import not found or unreadable: util/mixins.\n')
+    expect(logMock.getCall(3).args[0]).to.equal('Error: Can\'t find stylesheet to import.\n')
     expect(await fs.pathExists('test/output/css/test-foundation.css')).to.equal(false)
     expect(await fs.pathExists('test/output/css/test-foundation.css.map')).to.equal(false)
   })
@@ -190,10 +190,8 @@ describe('Build Images', () => {
   it('Should move and minify images', async () => {
     expect(await fs.pathExists('test/output/img')).to.equal(false)
     const buildImg = tasks['build-img'](gulp, 'test/input/build-valid/*', 'test/output/img')
-
     await streamAsPromise(buildImg())
-
     expect(await fs.pathExists('test/output/img/test.jpg')).to.equal(true)
     expect(logMock.args[1][0]).to.have.string('gulp-imagemin: Minified 1 image')
-  })
+  }).timeout(0)
 }).timeout(0)

@@ -31,6 +31,12 @@ describe('Lint Sass', () => {
     expect(logMock.getCall(1).args[0]).to.equal('No Sass Lint Errors\n')
   })
 
+  function ErrorLogExists (logs, value) {
+    return logs.find((ele) => {
+      return ele.args[0] === value
+    })
+  }
+
   // eslint-disable-next-line mocha/no-exclusive-tests
   it('Run lint-sass on invalid sass files', async () => {
     const lintSass = tasks['lint-sass'](gulp, 'test/input/lint-invalid/*.scss')
@@ -40,9 +46,11 @@ describe('Lint Sass', () => {
     } catch (e) {
       expect(e.message).to.equal('Sass Lint Errors')
     }
-    expect(logMock.getCall(3).args[0]).to.be.equal('test/input/lint-invalid/test.scss\n')
-    expect(logMock.getCall(5).args[0]).to.be.equal('  2:14  warning  Trailing semicolons required  trailing-semicolon\n')
-    expect(logMock.getCall(9).args[0]).to.be.equal('✖ 1 problem (0 errors, 1 warning)\n')
+    const logs = logMock.getCalls()
+
+    expect(ErrorLogExists(logs, 'test/input/lint-invalid/test.scss\n') !== undefined)
+    expect(ErrorLogExists(logs, '  2:14  warning  Trailing semicolons required  trailing-semicolon\n') !== undefined)
+    expect(ErrorLogExists(logs, '✖ 1 problem (0 errors, 1 warning)\n') !== undefined)
   })
 }).timeout(0)
 
