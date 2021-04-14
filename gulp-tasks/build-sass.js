@@ -1,5 +1,5 @@
 const sourcemaps = require('gulp-sourcemaps')
-const sass = require('gulp-sass')
+const sass = require('gulp-dart-sass')
 const autoprefixer = require('gulp-autoprefixer')
 const postcss = require('gulp-postcss')
 const mqpacker = require('css-mqpacker')
