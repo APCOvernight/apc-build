@@ -1,0 +1,20 @@
+# Setting repository line endings.
+*.css           text eol=lf
+*.html          text eol=lf
+*.js            text eol=lf
+*.json          text eol=lf
+*.less          text eol=lf
+*.scss          text eol=lf
+*.md            text eol=lf
+*.svg           text eol=lf
+*.yml           text eol=lf
+.babelrc        text eol=lf
+.pug-lintrc     text eol=lf
+.eslintrc       text eol=lf
+.editorconfig   text eol=lf
+*.log           text eol=lf
+
+
+# Denote all files that are truly binary and should not be modified.
+*.png binary
+*.jpg binary
