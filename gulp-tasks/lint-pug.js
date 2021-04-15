@@ -26,10 +26,8 @@ module.exports = (gulp, path) => {
       .pipe(pugLint())
       .pipe(pugLint({ reporter: (errors) => {
         if (errors.length) {
-          console.log(errors)
           errors.map(error => splitLog(error.message))
           throw gulpError('lint-pug', 'Pug Lint Errors')
-
         } else {
           log('No Pug Lint Errors')
         }
