@@ -9,5 +9,19 @@ chmod +x ./cc-test-reporter
       }
     }
 
+    stage('Coverage') {
+      steps {
+        sh 'yarn run coverage'
+      }
+    }
+
+    stage('Test') {
+      steps {
+        sh '''./cc-test-reporter before-build
+yarn test
+./cc-test-reporter after-build --exit-code $?'''
+      }
+    }
+
   }
 }
