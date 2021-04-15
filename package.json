@@ -32,13 +32,15 @@
     "gulp": "^4.0.0"
   },
   "dependencies": {
-    "babel-core": "6.26.0",
-    "babel-env": "2.4.1",
+    "@babel/core": "^7.13.15",
+    "@babel/preset-env": "^7.13.15",
     "browserify": "16.2.0",
+    "chai": "4.2.0",
+    "coveralls": "3.0.2",
     "css-mqpacker": "6.0.2",
     "fancy-log": "^1.3.2",
     "gulp-autoprefixer": "5.0.0",
-    "gulp-babel": "7.0.1",
+    "gulp-babel": "8.0.0",
     "gulp-dart-sass": "^1.0.2",
     "gulp-eslint": "4.0.2",
     "gulp-if": "2.0.2",
@@ -48,13 +50,16 @@
     "gulp-size": "3.0.0",
     "gulp-sourcemaps": "2.6.4",
     "gulp-uglify": "3.0.0",
+    "mocha": "6.0.1",
+    "nyc": "13.3.0",
     "plugin-error": "^1.0.1",
+    "sinon": "7.2.4",
+    "sinon-chai": "3.3.0",
     "vinyl-buffer": "1.0.1",
     "vinyl-source-stream": "2.0.0"
   },
   "devDependencies": {
     "apc-style": "1.2.0",
-    "apc-test": "1.1.0",
     "foundation-sites": "6.4.4-rc1",
     "fs-extra": "5.0.0",
     "gulp": "4.0.0"
