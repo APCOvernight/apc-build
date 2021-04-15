@@ -48,7 +48,7 @@ module.exports = (gulp, entries, dest, destFilename = 'bundle.js', showFileSizes
       .pipe(source(destFilename))
       .pipe(buffer())
       .pipe(sourcemaps.init())
-      .pipe(babel({presets: ['env']}))
+      .pipe(babel({presets: ['@babel/preset-env']}))
       .pipe(uglify())
       .pipe(sourcemaps.write('./'))
       .pipe(gulpif(showFileSizes, size({showFiles: true, showTotal: false, gzip: true})))
