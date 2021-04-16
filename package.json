@@ -6,7 +6,9 @@
   "scripts": {
     "test": "yarn lint && nyc mocha",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "lint": "eslint test/*.spec.js gulp-tasks/*.js"
+    "lint": "eslint test/*.spec.js gulp-tasks/*.js",
+    "snyk-protect": "snyk protect",
+    "prepare": "yarn run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -57,7 +59,8 @@
     "sinon": "7.2.4",
     "sinon-chai": "3.3.0",
     "vinyl-buffer": "1.0.1",
-    "vinyl-source-stream": "2.0.0"
+    "vinyl-source-stream": "2.0.0",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "apc-style": "1.2.0",
@@ -98,5 +101,6 @@
       "lcov"
     ],
     "cache": true
-  }
+  },
+  "snyk": true
 }
